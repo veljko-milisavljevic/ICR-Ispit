@@ -47,7 +47,8 @@
                     <th scope="col">Igračka</th>
                     <th scope="col">Vreme</th>
                     <th scope="col">Količina</th>
-                    <th scope="col">Cena</th>                                        
+                    <th scope="col">Cena</th>
+                    <th scope="col">Ukuno</th>                         
                     <th scope="col">Status</th>
                     <th scope="col">Opcije</th>
                 </tr>
@@ -59,6 +60,7 @@
                     <td>{{order.time}}</td>
                     <td>{{order.quantity}}</td>
                     <td>{{order.price}}</td>
+                    <td>{{order.price*order.quantity}}</td>
                     <td>{{statusMap[order.status]}}</td>
                     <td>
                         @if(order.status == 'na') {
@@ -82,7 +84,16 @@
                     </td>
                 </tr>
                 }
+                
             </tbody>
+            <tfoot class="table-group-divider">
+        <tr>
+            <td colspan="4" class="text-end fw-bold">Ukupno za uplatu:</td>
+            <td colspan="3" class="fw-bold text-primary">
+                {{ totalPrice() }} RSD
+            </td>
+        </tr>
+    </tfoot>
         </table>
 
     </div>

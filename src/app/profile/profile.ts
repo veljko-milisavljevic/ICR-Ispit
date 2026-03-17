@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { Component, signal, computed } from '@angular/core';
 import { UserService } from '../../services/user.service';
 import { Router } from '@angular/router';
 import { RouterLink } from '@angular/router';
@@ -56,4 +56,15 @@ export class Profile {
     UserService.updateOrder(order.orderId, 'disliked')
     this.activeUser.set(UserService.getActiveUser())
   }
+
+  protected totalPrice = computed(() => {
+    const user = this.activeUser();
+    if (!user || !user.data) return 0;
+
+    return user.data.reduce((sum, order) => {
+        if (order.status === 'canceled' || order.status === 'paid') return sum;
+        
+        return sum + (order.price * order.quantity);
+    }, 0);
+});
 }
