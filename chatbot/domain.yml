@@ -9,6 +9,18 @@ intents:
   - mood_unhappy
   - bot_challenge
   - latest_toys
+  - search_toys
+
+slots:
+  search_criteria:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: from_entity
+        entity: search_criteria
+
+entities:
+ - search_criteria
 
 responses:
   utter_greet:
@@ -32,6 +44,7 @@ responses:
 
 actions:
   - action_latest_toys
+  - action_search_toys
 
 session_config:
   session_expiration_time: 60

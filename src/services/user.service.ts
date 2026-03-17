@@ -46,6 +46,23 @@ export class UserService {
         }
     }
 
+    static register(newUser: UserModel): void {
+        const users = this.getUsers();
+
+        const exists = users.find(u => u.email === newUser.email);
+
+        if (exists) {
+            throw new Error('USER_ALREADY_EXISTS');
+        }
+
+        if (!newUser.data) {
+            newUser.data = [];
+        }
+
+        users.push(newUser);
+        localStorage.setItem(this.USERS_KEY, JSON.stringify(users));
+    }
+
     static hasAuth() {
         return localStorage.getItem(this.ACTIVE_KEY) !== null
     }

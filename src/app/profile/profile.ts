@@ -1,12 +1,13 @@
 import { Component, signal } from '@angular/core';
 import { UserService } from '../../services/user.service';
 import { Router } from '@angular/router';
+import { RouterLink } from '@angular/router';
 import { UserModel } from '../../models/user.model';
 import { OrderModel } from '../../models/order.model';
 
 @Component({
   selector: 'app-profile',
-  imports: [],
+  imports: [RouterLink],
   templateUrl: './profile.html',
   styleUrl: './profile.css'
 })
@@ -14,8 +15,8 @@ export class Profile {
 
   protected activeUser = signal<UserModel | null>(null)
   protected statusMap = {
-    'na': 'Na čekanju',
-    'paid': 'Plaćeno',
+    'na': 'Rezervisano',
+    'paid': 'Pristiglo',
     'canceled': 'Otkazano',
     'liked': 'Dobro ocenjeno',
     'disliked': 'Loše ocenjeno'

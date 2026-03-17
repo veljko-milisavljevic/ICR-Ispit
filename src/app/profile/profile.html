@@ -55,7 +55,7 @@
             <tbody>
                 @for (order of activeUser()?.data; track $index) {
                 <tr>
-                    <th scope="row">{{order.toyName}}</th>
+                    <th scope="row"><a [routerLink]="`/toy/${order.permalink}`">{{order.toyName}}</a></th>
                     <td>{{order.time}}</td>
                     <td>{{order.quantity}}</td>
                     <td>{{order.price}}</td>

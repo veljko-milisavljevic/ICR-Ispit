@@ -60,8 +60,8 @@ export class Reservation {
       time: new Date().toLocaleString(),
       quantity: this.form.value.quantity,
       price: this.toy()!.price,
-      status: 'na'
-      
+      status: 'na',
+      permalink: this.toy()!.permalink
     })
 
     this.router.navigateByUrl('/profile')

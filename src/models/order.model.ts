@@ -5,5 +5,6 @@ export interface OrderModel {
     time: string
     quantity: number
     price: number
+    permalink: string
     status: 'na' | 'paid' | 'canceled' | 'liked' | 'disliked'
 }

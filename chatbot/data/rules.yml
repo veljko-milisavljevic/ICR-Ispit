@@ -16,3 +16,8 @@ rules:
   steps:
   - intent: latest_toys
   - action: action_latest_toys
+
+- rule: 'Search toys'
+  steps:
+  - intent: search_toys
+  - action: action_search_toys

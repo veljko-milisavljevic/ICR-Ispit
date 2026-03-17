@@ -58,22 +58,26 @@ export class App {
           return
         }
         for (let message of rsp.data) {
-          if (message.attachment != null && Array.isArray(message.attachment)){
-            let html = ''
-            for (let toy of message.attachment as ToyModel[]) {
-              html += `<ul class='list-unstyled'>`
-              html += `<li>Naziv: ${toy.name}</li>`
-              html += `<li>Cena: ${toy.price}</li>`
-              html += `<li>Uzrast: ${toy.ageGroup.name}</li>`
-              html += `<li>Pol: ${toy.targetGroup}</li>`
-              html += `</ul>`
-              html += `<p>${toy.description}</p>`
+          if (message.attachment != null) {
+
+            if (message.attachment.type == 'toy_list' && Array.isArray(message.attachment.data)) {
+              let html = ''
+              for (let toy of message.attachment.data as ToyModel[]) {
+                html += `<ul class='list-unstyled'>`
+                html += `<li>${toy.name}</li>`
+                html += `<li>Cena: ${toy.price}</li>`
+                html += `<li>Uzrast: ${toy.ageGroup.name}</li>`
+                html += `<li>Pol: ${toy.targetGroup}</li>`
+                html += `</ul>`
+                html += `<p>${toy.description}</p>`
+              }
+
+              this.messages.push({
+                type: 'bot',
+                text: html
+              })
             }
 
-            this.messages.push({
-            type: 'bot',
-            text: html
-          })
           }
           this.messages.push({
             type: 'bot',
@@ -81,8 +85,8 @@ export class App {
           })
         }
 
-        this.messages = this.messages.filter(m=>{
-          if(m.type === 'bot') {
+        this.messages = this.messages.filter(m => {
+          if (m.type === 'bot') {
             return m.text != this.botThinkingPlaceholder
           }
           return true

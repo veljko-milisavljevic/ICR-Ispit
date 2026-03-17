@@ -1,6 +1,6 @@
 <div class="card login">
     <div class="card-header">
-        <h5>Login</h5>
+        <h5>Prijava</h5>
     </div>
     <div class="card-body">
         <form [formGroup]="form" (ngSubmit)="onSubmit()">
@@ -16,5 +16,10 @@
                 <i class="fa-solid fa-arrow-up-right-from-square"></i> Prijavi se
             </button>
         </form>
+        <hr>
+        <div class="text-center">
+            <span>Nemate nalog?</span>
+            <a class="btn btn-link" routerLink="/signup">Registrujte se</a>
+        </div>
     </div>
 </div>

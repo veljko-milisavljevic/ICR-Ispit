@@ -24,6 +24,32 @@ nlu:
     - any new stuff in stock
     - what toys just came out
 
+- intent: search_toys
+  examples: |
+    - find [lego](search_criteria)
+    - search for [lego](search_criteria)
+    - look for [lego](search_criteria) toys
+    - can you find [lego](search_criteria)
+    - please search for [lego](search_criteria)
+    - help me find [lego](search_criteria)
+    - I’m looking for [lego](search_criteria)
+    - show me [lego](search_criteria) toys
+    - do you have lego
+    - check if you have lego
+    - search [lego](search_criteria) sets
+    - find toy lego
+    - find [lego](search_criteria) for me
+    - can you look up lego
+    - see if you have [lego](search_criteria) in stock
+    - I want to buy lego
+    - any [lego](search_criteria) available
+    - get me [lego](search_criteria) toys
+    - search toys like [lego](search_criteria)
+    - show results for [lego](search_criteria)
+
+- regex: search_toys
+  examples: |
+    (?i)\b(find|search|search for|look for|show|get)\b\s+(?:me\s+)?(.+)
 
 - intent: greet
   examples: |
@@ -113,3 +139,4 @@ nlu:
     - are you a human?
     - am I talking to a bot?
     - am I talking to a human?
+
