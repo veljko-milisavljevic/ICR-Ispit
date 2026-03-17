@@ -105,4 +105,18 @@ export class UserService {
         localStorage.setItem(this.USERS_KEY, JSON.stringify(all))
     }
 
+    static deleteOrder(orderId: string) {
+        const all = this.getUsers()
+
+        for (let u of all) {
+            const index = u.data.findIndex(o => o.orderId === orderId);
+            if (index !== -1) {
+                u.data.splice(index, 1);
+                break;
+            }
+        }
+
+        localStorage.setItem(this.USERS_KEY, JSON.stringify(all))
+    }
+
 }

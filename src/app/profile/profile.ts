@@ -42,6 +42,11 @@ export class Profile {
     this.activeUser.set(UserService.getActiveUser())
   }
 
+  protected delete(order: OrderModel) {
+    UserService.deleteOrder(order.orderId)
+    this.activeUser.set(UserService.getActiveUser())
+  }
+
   protected like(order: OrderModel) {
     UserService.updateOrder(order.orderId, 'liked')
     this.activeUser.set(UserService.getActiveUser())
