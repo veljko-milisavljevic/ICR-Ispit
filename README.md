@@ -1,59 +1,98 @@
-# ICRIspit
+# Toy Store with a Rasa Assistant
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.0.1.
+An Angular toy store with a chatbot that recommends and searches for toys. Exam project for the *Human-Computer Interaction* course at Singidunum University. It shares its store front end with my [Client-side Web Applications project](https://github.com/veljko-milisavljevic/KVA-ispit) and adds the assistant.
 
-## Development server
+## Features
 
-To start a local development server, run:
+- Catalog with search and filters, toy details, sign up and login.
+- Reservations with quantity, simulated payment, cancellation, rating and an order total.
+- Chat widget backed by Rasa, with two custom actions:
+  - `action_latest_toys` returns the last three toys from the API.
+  - `action_search_toys` searches names, descriptions and categories.
 
-```bash
-ng serve
+The store UI and the bot's toy replies are in Serbian. The bot is trained on English phrases, for example "recommend something fun" or "find lego".
+
+## Architecture
+
+```mermaid
+flowchart LR
+    A[Angular app :4200] --> API[toy.pequla.com API]
+    A -- REST webhook --> R[Rasa :5005]
+    R --> S[Action server :5055]
+    S --> API
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+## Tech stack
 
-## Code scaffolding
+- Angular 21, TypeScript, Axios, Bootstrap 5
+- Rasa 3.6.21, Python 3.10, Rasa SDK
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+## Getting started
 
-```bash
-ng generate component component-name
-```
+### Prerequisites
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+- [Git](https://git-scm.com/downloads)
+- [Node.js](https://nodejs.org/en/download) 20.19+, 22.12+ or 24+
+- Python 3.10. Rasa 3.6 does not support newer versions, so if your system has one, use [pyenv](https://github.com/pyenv/pyenv#installation).
 
-```bash
-ng generate --help
-```
+### Installation
 
-## Building
-
-To build the project run:
+The repository is about 250 MB, because it includes trained models.
 
 ```bash
-ng build
+git clone https://github.com/veljko-milisavljevic/ICR-Ispit.git
+cd ICR-Ispit
+npm install
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
+Create the Python environment with pyenv:
 
 ```bash
-ng test
+cd chatbot
+pyenv install --skip-existing 3.10.14
+PYENV_VERSION=3.10.14 pyenv exec python -m venv .venv
+source .venv/bin/activate
+pip install rasa==3.6.21
 ```
 
-## Running end-to-end tests
+If you already have Python 3.10, replace the two pyenv commands with `python3.10 -m venv .venv`.
 
-For end-to-end (e2e) testing, run:
+### Running
+
+Run each part in its own terminal, starting from the repository root.
+
+**1. Train and start Rasa**
 
 ```bash
-ng e2e
+cd chatbot
+source .venv/bin/activate
+rasa train
+rasa run --enable-api --cors "http://localhost:4200"
 ```
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+**2. Start the action server**
 
-## Additional Resources
+```bash
+cd chatbot
+source .venv/bin/activate
+rasa run actions
+```
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+**3. Start the web app**
+
+```bash
+npm start
+```
+
+Open http://localhost:4200. The login form is prefilled with a demo account (`korisnik@primer.com` / `user123`).
+
+## Limitations
+
+- Users, passwords and reservations are stored unencrypted in `localStorage`, and payment is simulated.
+- Almost all search training examples use "lego", so other search terms are recognized less reliably.
+- The chat does not handle connection errors: if Rasa is down, the "thinking" message stays on screen.
+- The About page is a placeholder.
+
+## Author
+
+[Veljko Milisavljević](https://github.com/veljko-milisavljevic)
