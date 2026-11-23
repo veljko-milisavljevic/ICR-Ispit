@@ -92,6 +92,9 @@ Open http://localhost:4200. The login form is prefilled with a demo account (`ko
 - Almost all search training examples use "lego", so other search terms are recognized less reliably.
 - The chat does not handle connection errors: if Rasa is down, the "thinking" message stays on screen.
 - The About page is a placeholder.
+- The repository still contains files from the original exam submission that should not be versioned: the Rasa cache (`chatbot/.rasa/`), trained models (`chatbot/models/`) and `__pycache__`. They make the clone about 250 MB. They are not needed to run the project, because `rasa train` creates a new model.
+- The setup above has not been tested from a fresh clone.
+- The store depends on the course API at `toy.pequla.com`. If it is unavailable, the catalog and the bot's toy replies stay empty.
 
 ## Author
 
